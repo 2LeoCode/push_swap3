@@ -14,6 +14,6 @@ t_queue	*qalloc(size_t size)
 	queue_ptr->size = 0;
 	queue_ptr->capacity = size;
 	queue_ptr->head = 0;
-	queue_ptr->tail = size;
+	queue_ptr->tail = size - 1;
 	return (queue_ptr);
 }

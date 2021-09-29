@@ -1,9 +1,9 @@
 #include <stack_int.h>
 
-int	stkpop(t_stack *stack_ptr)
+t_value	stkpop(t_stack *stack_ptr)
 {
 	if (!stack_ptr->size)
-		return (STACK_EMPTY);
+		return ((t_value){0, false, false, true});
 	--stack_ptr->size;
 	return (*stack_ptr->begin++);
 }

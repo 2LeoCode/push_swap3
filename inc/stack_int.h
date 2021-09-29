@@ -5,11 +5,11 @@
 
 struct s_stack
 {
-	int		*begin;
-	int		*end;
-	size_t	size;
-	size_t	capacity;
-	int		data[];
+	t_value		*begin;
+	t_value		*end;
+	size_t		size;
+	size_t		capacity;
+	t_value		data[];
 };
 
 #endif
