@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:47:47 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/09/23 17:34:08 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/09/29 19:30:47 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,8 @@ static const char	*(*g_instruction[INSTRUCTION_CNT])() = {
 
 static int	checker_judge(t_stack **a_ptr, t_stack **b_ptr)
 {
-	t_value	x;
-
-	if (!stkempty(*b_ptr))
+	if (!stkempty(*b_ptr) || !stksorted(*a_ptr))
 		return (checker_ko(a_ptr, b_ptr));
-	x = stkpop(*a_ptr);
-	while (!stkempty(*a_ptr))
-	{
-		if (x.val > stktop(*a_ptr).val)
-			return (checker_ko(a_ptr, b_ptr));
-		x = stkpop(*a_ptr);
-	}
 	return (checker_ok(a_ptr, b_ptr));
 }
 

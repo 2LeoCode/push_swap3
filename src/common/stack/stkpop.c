@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stkpop.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/29 19:33:34 by Leo Suardi        #+#    #+#             */
+/*   Updated: 2021/09/29 19:33:34 by Leo Suardi       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stack_int.h>
 
-t_value	stkpop(t_stack *stack_ptr)
+int	stkpop(t_stack *stack_ptr)
 {
 	if (!stack_ptr->size)
-		return ((t_value){0, false, false, true});
+		return (STACK_EMPTY);
 	--stack_ptr->size;
 	return (*stack_ptr->begin++);
 }

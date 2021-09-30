@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stkbegin.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/29 19:33:19 by Leo Suardi        #+#    #+#             */
+/*   Updated: 2021/09/29 19:33:19 by Leo Suardi       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stack_int.h>
 
-t_value	*stkbegin(t_stack *stack_ptr)
+int	*stkbegin(t_stack *stack_ptr)
 {
 	return (stack_ptr->begin);
 }
 
-const t_value	*stkcbegin(const t_stack *stack_ptr)
+const int	*stkcbegin(const t_stack *stack_ptr)
 {
-	return ((const t_value *)stack_ptr->begin);
+	return ((const int *)stack_ptr->begin);
 }
 
-t_value	*stkrbegin(t_stack *stack_ptr)
+int	*stkrbegin(t_stack *stack_ptr)
 {
 	return (stack_ptr->end - 1);
 }
 
-const t_value	*stkrcbegin(const t_stack *stack_ptr)
+const int	*stkrcbegin(const t_stack *stack_ptr)
 {
-	return ((const t_value *)(stack_ptr->end - 1));
+	return ((const int *)(stack_ptr->end - 1));
 }

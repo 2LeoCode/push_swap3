@@ -9,4 +9,6 @@
 # include "common.h"
 # include "queue.h"
 
+# define INSTR_QUEUE_SIZE 1800
+
 #endif

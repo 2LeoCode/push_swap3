@@ -3,9 +3,9 @@
 #include <stdio.h>
 const char	*ra(t_stack *a, t_stack *b)
 {
-	size_t		size;
-	t_value		*begin;
-	t_value		x;
+	size_t	size;
+	int		*begin;
+	int		x;
 
 	if (!a || !b)
 		return ("ra");
@@ -15,8 +15,7 @@ const char	*ra(t_stack *a, t_stack *b)
 		return (NULL);
 	begin = stkbegin(a);
 	x = *begin;
-	ft_memmove(begin, begin + 1, (size - 1) * sizeof(t_value));
-	begin = stkbegin(a);
+	ft_memmove(begin, begin + 1, (size - 1) * sizeof(int));
 	*stkrbegin(a) = x;
 	return (NULL);
 }
@@ -40,8 +39,8 @@ const char	*rr(t_stack *a, t_stack *b)
 const char	*rra(t_stack *a, t_stack *b)
 {
 	size_t		size;
-	t_value		*begin;
-	t_value		x;
+	int			*begin;
+	int			x;
 
 	if (!a || !b)
 		return ("rra");
@@ -51,7 +50,7 @@ const char	*rra(t_stack *a, t_stack *b)
 		return (NULL);
 	begin = stkbegin(a);
 	x = *stkrbegin(a);
-	ft_memmove(begin + 1, begin, (size - 1) * sizeof(t_value));
+	ft_memmove(begin + 1, begin, (size - 1) * sizeof(int));
 	*begin = x;
 	return (NULL);
 }

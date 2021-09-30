@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stkend.c                                           :+:      :+:    :+:   */
+/*   stksorted.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 19:33:30 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/09/29 19:33:30 by Leo Suardi       ###   ########.fr       */
+/*   Created: 2021/09/29 19:29:17 by Leo Suardi        #+#    #+#             */
+/*   Updated: 2021/09/29 19:34:03 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stack_int.h>
 
-int	*stkend(t_stack *stack_ptr)
+bool	stksorted(t_stack *stack_ptr)
 {
-	return (stack_ptr->end);
-}
+	int	*ptr;
 
-const int	*stkcend(const t_stack *stack_ptr)
-{
-	return ((const int *)stack_ptr->end);
-}
-
-int	*stkrend(t_stack *stack_ptr)
-{
-	return (stack_ptr->begin - 1);
-}
-
-const int	*stkrcend(const t_stack *stack_ptr)
-{
-	return ((const int *)(stack_ptr->begin - 1));
+	ptr = stkrend(stack_ptr);
+	while (++ptr != stkrbegin(stack_ptr))
+		if (*ptr > *(ptr + 1))
+			return (false);
+	return (true);
 }

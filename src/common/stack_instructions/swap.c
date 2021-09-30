@@ -2,8 +2,8 @@
 
 const char	*sa(t_stack *a, t_stack *b)
 {
-	t_value	*begin;
-	t_value	x;
+	int	*begin;
+	int	x;
 
 	if (!a || !b)
 		return ("sa");
