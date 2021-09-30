@@ -55,4 +55,4 @@ debug:
 	@echo 'Sources: $(SRC)'
 	@echo 'Objects: $(OBJ)'
 
-.PHONY: all clean fclean init debug
+.PHONY: all clean fclean re init debug
