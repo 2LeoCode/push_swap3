@@ -19,7 +19,7 @@ int	fill_stack(t_stack *sa, int ac, const char **av)
 			while (ft_isdigit(*ptr))
 				--ptr;
 			if (ft_isdigit(*(ptr + 1)))
-				if (stkpush(sa, ft_atoi(ptr + 1), false, false) == STACK_DUPLICATE)
+				if (stkpush(sa, ft_atoi(ptr + 1)) == STACK_DUPLICATE)
 					return (-1);
 		}
 	}

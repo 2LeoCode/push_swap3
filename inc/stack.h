@@ -26,9 +26,9 @@ const int	*stkcbegin(const t_stack *stack_ptr);
 int			*stkend(t_stack *stack_ptr);
 const int	*stkcend(const t_stack *stack_ptr);
 int			*stkrbegin(t_stack *stack_ptr);
-const int	*stkcrbegin(t_stack *stack_ptr);
+const int	*stkrcbegin(const t_stack *stack_ptr);
 int			*stkrend(t_stack *stack_ptr);
-const int	*stkcrend(t_stack *stack_ptr);
+const int	*stkrcend(const t_stack *stack_ptr);
 
 bool		stksorted(t_stack *stack_ptr);
 
