@@ -6,18 +6,59 @@
 /*   By: lsuardi <lsuardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 11:18:57 by lsuardi           #+#    #+#             */
-/*   Updated: 2021/10/01 16:24:59 by lsuardi          ###   ########.fr       */
+/*   Updated: 2021/10/01 18:40:47 by lsuardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <resolver.h>
 #include <resolver_int.h>
 #include <mlx.h>
+#include <utils.h>
 
-int	init_mlxptr(t_mlxptr mlxvar, size_t stack_size, char *title)
+void	display_head(t_mlxptr mlx)
 {
+	const unsigned int	white = 0x00ffffff;
+	const unsigned int	black = 0x00000000;
+	int					i;
+	int					j;
+
+	i = ~0;
+	while (++i < TILE_Y)
+	{
+		j = -1;
+		while (++j < mlx->win.w)
+			mlx->win.pixels[i * mlx->win.w + j] = *(t_trgb *)&white;
+	}
+	mlx_put_image_to_window(mlx->key, mlx->win.key, mlx->win.img_key, 0, 0);
+	mlx_string_put(mlx->key, mlx->win.key, TILE_X / 3 + 2, TILE_Y / 3, black,
+		"A");
+	mlx_string_put(mlx->key, mlx->win.key, TILE_X + TILE_X / 3 + 4, TILE_Y / 3,
+		black, "B");
+}
+
+void	display_foot(t_mlxptr mlx)
+{
+	const unsigned int	white = 0x00ffffff;
+	const unsigned int	black = 0x00000000;
+	int					i;
+	int					j;
+
+	i = mlx->win.h - TILE_Y;
+	while (++i < mlx->win.h)
+	{
+		j = -1;
+		while (++j < mlx->win.w)
+			mlx->win.pixels[i * mlx->win.w + j] = *(t_trgb *)&white;
+	}
+	mlx_put_image_to_window(mlx->key, mlx->win.key, mlx->win.img_key, 0, 0);
+}
+
+int	init_display(t_mlxptr mlxvar, char *title, t_stack *a, t_stack *b)
+{
+	const int	tot_size = stksize(a) + stksize(b);
+
 	mlxvar->win.w = TILE_X * 2 + 6;
-	mlxvar->win.h = TILE_Y * (stack_size + 1);
+	mlxvar->win.h = TILE_Y * (tot_size + 2) + 2 * tot_size + 4;
 	mlxvar->win.title = ft_strdup(title);
 	mlxvar->key = mlx_init();
 	mlxvar->win.key = mlx_new_window(mlxvar->key, mlxvar->win.w,
@@ -29,70 +70,46 @@ int	init_mlxptr(t_mlxptr mlxvar, size_t stack_size, char *title)
 			&mlxvar->win.bpp, &mlxvar->win.size_line, &mlxvar->win.endian);
 	if (mlxvar->win.title && mlxvar->key && mlxvar->win.key
 			&& mlxvar->win.img_key && mlxvar->win.pixels)
-		return (0);
-	free(title);
-	mlx_destroy_image(mlxvar->key, mlxvar->win.img_key);
-	mlx_destroy_window(mlxvar->key, mlxvar->win.key);
-	mlx_destroy_display(mlxvar->key);
-	return (-1);
+	{
+		free(title);
+		mlx_destroy_image(mlxvar->key, mlxvar->win.img_key);
+		mlx_destroy_window(mlxvar->key, mlxvar->win.key);
+		mlx_destroy_display(mlxvar->key);
+		return (-1);
+	}
+	display_head(mlxvar);
+	display_foot(mlxvar);
+	display_stacks(mlxvar, a, b, NULL);
+	return (0);
 }
 
-void	display_head(t_mlxptr mlx)
+void	put_tile(t_mlxptr mlx, const int val, const int x, const int y)
 {
 	const unsigned int	white = 0x00ffffff;
 	const unsigned int	black = 0x00000000;
-	size_t				i;
-	size_t				j;
+	char				val_str[12];
+	int					end_x;
+	int					end_y;
+	int					i;
+	int					j;
 
-	j = ~0;
-	while (++j < TILE_Y)
-	{
-		i = ~0;
-		while (++i < mlx->win.w)
-			mlx->win.pixels[j * mlx->win.w + i] = *(t_trgb *)&white;
-	}
-	j = mlx->win.h - TILE_Y;
-	while (++j < mlx->win.h)
-	{
-		i = ~0;
-		while (++i < mlx->win.w)
-			mlx->win.pixels[j * mlx->win.w + i] = *(t_trgb *)&white;
-	}
-	mlx_put_image_to_window(mlx->key, mlx->win.key, mlx->win.img_key, 0, 0);
-	mlx_string_put(mlx->key, mlx->win.key, TILE_X / 3 + 2, TILE_Y / 3, black,
-		"A");
-	mlx_string_put(mlx->key, mlx->win.key, TILE_X + TILE_X / 3 + 4, TILE_Y / 3,
-		black, "B");
-}
-
-size_t	number_size(int nb)
-{
-	size_t	size;
-
-	size = (nb <= 0);
-	while (nb)
-	{
-		++size;
-		nb /= 10;
-	}
-	return (size);
-}
-
-void	ft_itostr(int n, char str[12])
-{
-	const size_t	size = number_size(n);
-	static int		index = -2;
-
-	
-}
-
-void	put_tile(t_mlxptr mlx, int val, int x, int y)
-{
-	char	val_str[12];
-
+	end_x = x + TILE_X;
+	end_y = y + TILE_Y;
+	if (end_x > mlx->win.w)
+		end_x = mlx->win.w;
+	if (end_y > mlx->win.h)
+		end_y = mlx->win.h;
 	ft_bzero(val_str, 12 * sizeof(char));
 	ft_itostr(val, val_str);
-
+	i = y;
+	while (++i <= end_y)
+	{
+		j = x + 1;
+		while (++i < end_x)
+			mlx->win.pixels[end_y * mlx->win.w + end_x] = *(t_trgb *)&white;
+	}
+	mlx_put_image_to_window(mlx->key, mlx->win.img_key, mlx->win.key, 0, 0);
+	mlx_string_put(mlx->key, mlx->win.key, x + TILE_X / 3, y + TILE_Y / 3, black, val_str);
 }
 
 void	display_stacks(t_mlxptr mlx, const t_stack *a, const t_stack *b,
@@ -109,7 +126,10 @@ void	display_stacks(t_mlxptr mlx, const t_stack *a, const t_stack *b,
 	i = stksize(a);
 	j = stksize(b);
 	while (i--)
-		put_tile(mlx, a_raw[i], 2, (i + 1) * TILE_Y + 2 * i);
+		put_tile(mlx, a_raw[i], 2, (i + 1) * TILE_Y + 2 * (i + 1));
 	while (j--)
 		put_tile(mlx, b_raw[j], TILE_X + 4, (j + 1) * TILE_Y + 2 * (j + 1));
+	if (op)
+		mlx_string_put(mlx->key, mlx->win.key, 64, mlx->win.h - 2 * TILE_Y / 3, black, op(NULL, NULL));
+	usleep(500000);
 }

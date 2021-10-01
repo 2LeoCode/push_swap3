@@ -13,5 +13,7 @@ bool	ft_isdigit(int c);
 void	*ft_memcpy(void *dst, const void *src, size_t size);
 void	*ft_memmove(void *dst, const void *src, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
+size_t	number_size(int nb);
+void	ft_itostr(int n, char str[12]);
 
 #endif
