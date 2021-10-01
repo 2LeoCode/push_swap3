@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
+/*   By: lsuardi <lsuardi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:43:55 by leo               #+#    #+#             */
-/*   Updated: 2021/10/01 00:51:23 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/01 11:55:31 by lsuardi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,7 @@ void	add_op(const char *(*op)(t_stack *, t_stack *), t_stack *a,
 	t_stack *b, t_queue *instr_queue)
 {
 	op(a, b);
-	printf("=====\n");
-	printf("Op: %s\n", op(NULL, NULL));
 	enqueue(instr_queue, op(NULL, NULL));
-	print_stack(a);
-	print_stack(b);
-	usleep(500000);
 }
 
 void	reorderstart(t_stack *cur, t_stack *st[2], const char *(*moveset[4])(),

@@ -9,6 +9,8 @@
 # include "common.h"
 # include "queue.h"
 
-# define INSTR_QUEUE_SIZE 1800
+# define INSTR_QUEUE_SIZE 10000
+
+typedef struct s_mlx *	t_mlxptr;
 
 #endif
