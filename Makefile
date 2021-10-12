@@ -27,7 +27,7 @@ OBJ=$(COMMON_OBJ) $(CHECKER_OBJ) $(RESOLVER_OBJ)
 CC=clang
 CFLAGS=-Wall -Werror -Wextra -I $(INCD) #-fsanitize=address
 
-all: $(OBJD) $(NAME)
+all: $(NAME)
 
 fall: $(addprefix f, $(NAME))
 
@@ -38,19 +38,19 @@ push_swap: $(COMMON_OBJ)
 	$(MAKE) -C $(SRCD)/$@
 	cp $(SRCD)/$@/$@ .
 
-fpush_swap: $(COMMON_OBJ)
+fpush_swap: $(OBJD) $(COMMON_OBJ)
 	$(MAKE) -C $(SRCD)/push_swap
 	cp $(SRCD)/push_swap/push_swap .
 
-checker: $(COMMON_OBJ)
+checker: $(OBJD) $(COMMON_OBJ)
 	$(MAKE) -C $(SRCD)/checker
 	cp $(SRCD)/checker/checker .
 
-fchecker: $(COMMON_OBJ)
+fchecker: $(OBJD) $(COMMON_OBJ)
 	$(MAKE) -C $(SRCD)/checker
 	cp $(SRCD)/checker/checker .
 
-bonus: $(COMMON_OBJ)
+bonus: $(OBJD) $(COMMON_OBJ)
 	$(MAKE) -C $(SRCD)/push_swap_bonus
 	cp $(SRCD)/push_swap_bonus/push_swap .
 
