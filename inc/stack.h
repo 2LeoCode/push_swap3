@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/11 17:16:41 by Leo Suardi        #+#    #+#             */
+/*   Updated: 2021/10/11 17:16:41 by Leo Suardi       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STACK_H
 # define STACK_H
 
@@ -10,6 +22,7 @@
 # define STACK_EMPTY INT_MIN
 
 typedef struct s_stack	t_stack;
+
 t_stack		*stkalloc(size_t size);
 
 int			stkpush(t_stack *stack_ptr, int value);
@@ -30,6 +43,7 @@ const int	*stkrcbegin(const t_stack *stack_ptr);
 int			*stkrend(t_stack *stack_ptr);
 const int	*stkrcend(const t_stack *stack_ptr);
 
-bool		stksorted(t_stack *stack_ptr);
-
+bool		stksorted(const t_stack *stack_ptr);
+int			stkmin(const t_stack *stack_ptr);
+int			stkmax(const t_stack *stack_ptr);
 #endif

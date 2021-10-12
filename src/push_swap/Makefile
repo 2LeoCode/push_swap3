@@ -1,12 +1,13 @@
 SHELL=bash
 OS=$(shell uname)
 
-NAME=resolver
+NAME=push_swap
 .SUFFIXES=.c .o .h
 
 SRCD=.
-OBJD=../../.obj/resolver
-INCD=../../inc
+OBJD=../../.obj/push_swap
+INCD=../../inc ../../lib/minilibx-linux
+LIBD=../../lib
 
 COMMON_SRCD=../common
 COMMON_OBJD=../../.obj/common
@@ -15,23 +16,31 @@ COMMON_OBJ=$(patsubst $(COMMON_SRCD)/%$(word 1, $(.SUFFIXES)), $(COMMON_OBJD)/%$
 
 SRC=$(COMMON_SRC) $(wildcard $(SRCD)/*.c)
 OBJ=$(COMMON_OBJ) $(patsubst $(SRCD)/%$(word 1, $(.SUFFIXES)), $(OBJD)/%$(word 2, $(.SUFFIXES)), $(wildcard $(SRCD)/*.c))
+LIB=minilibx-linux
+LIBNAME=minilibx-Linux.a
 
 CC=clang
-CFLAGS=-Wall -Werror -Wextra -I $(INCD) #-fsanitize=address
+INCFLAGS=$(addprefix -I, $(INCD))
+CFLAGS=-Wall -Werror -Wextra $(INCFLAGS) -O3 #-fsanitize=address
+LCFLAGS=-L $(LIBD) -lXext -lX11 -lm -lz -lmlx
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(foreach dir, $(LIB), $(MAKE) -C $(LIBD)/$(dir))
+	cp $(LIBD)/*/*.a $(LIBD)
+	$(CC) $(INCFLAGS) $^ -o $@ $(LCFLAGS)
 
 $(OBJD)/%$(word 2, $(.SUFFIXES)): $(SRCD)/%$(word 1, $(.SUFFIXES))
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)
+	@$(foreach dir, $(LIB), $(MAKE) clean -C $(LIBD)/$(dir))
+	@rm -f $(LIBD)/*.a $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

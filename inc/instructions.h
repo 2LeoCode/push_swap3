@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instructions.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/10 13:24:29 by Leo Suardi        #+#    #+#             */
+/*   Updated: 2021/10/10 13:24:30 by Leo Suardi       ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INSTRUCTIONS_H
 # define INSTRUCTIONS_H
 
-# include <stack.h>
+# include "stack.h"
 
 const char	*pa(t_stack *a, t_stack *b);
 const char	*pb(t_stack *a, t_stack *b);

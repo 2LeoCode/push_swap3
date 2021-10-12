@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   itostr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsuardi <lsuardi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 18:42:08 by lsuardi           #+#    #+#             */
-/*   Updated: 2021/10/01 18:42:14 by lsuardi          ###   ########.fr       */
+/*   Updated: 2021/10/09 23:26:12 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <utils.h>
 
 void	ft_itostr(int n, char str[12])
 {
@@ -22,7 +24,7 @@ void	ft_itostr(int n, char str[12])
 		*str = '0';
 	while (n)
 	{
-		str[--i] = n % 10 + '0';
+		str[--i] = ft_abs(n % 10) + '0';
 		n /= 10;
 	}
 }

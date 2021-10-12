@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:47:47 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/09/29 19:30:47 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/11 17:19:20 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	apply_instructions(t_stack **sa_ptr, t_stack **sb_ptr)
 			return (ft_failure(out_of_memory, sa_ptr, sb_ptr));
 		i = 0;
 		while (i < INSTRUCTION_CNT
-				&& ft_strcmp(g_instruction[i](NULL, NULL), instruction))
+			&& ft_strcmp(g_instruction[i](NULL, NULL), instruction))
 			++i;
 		free(instruction);
 		if (i == INSTRUCTION_CNT)
@@ -68,6 +68,7 @@ int	main(int argc, char **argv)
 	t_stack		*sa;
 	t_stack		*sb;
 	size_t		size;
+	void		(*errfun)(void);
 
 	if (argc < 2)
 		return (ft_exception(invalid_arguments));
@@ -76,8 +77,9 @@ int	main(int argc, char **argv)
 		return (ft_exception(invalid_arguments));
 	if (alloc_stacks(&sa, &sb, size))
 		return (ft_exception(out_of_memory));
-	if (fill_stack(sa, argc, (const char **)argv))
-		return (ft_failure(duplicate_element, &sa, &sb));
+	errfun = fill_stack(sa, argc, (const char **)argv);
+	if (errfun)
+		return (ft_failure(errfun, &sa, &sb));
 	if (apply_instructions(&sa, &sb))
 		return (-1);
 	return (checker_judge(&sa, &sb));
