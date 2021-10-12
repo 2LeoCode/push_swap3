@@ -27,7 +27,7 @@ OBJ=$(COMMON_OBJ) $(CHECKER_OBJ) $(RESOLVER_OBJ)
 CC=clang
 CFLAGS=-Wall -Werror -Wextra -I $(INCD) #-fsanitize=address
 
-all: $(NAME)
+all: $(OBJD) $(NAME)
 
 fall: $(addprefix f, $(NAME))
 
@@ -65,8 +65,8 @@ fclean: clean
 
 re: fclean all
 
-init:
-	mkdir -p $(addprefix $(OBJD)/, $(SUBD))
+$(OBJD):
+	mkdir -p $(addprefix $@/, $(SUBD))
 
 test: all
 	cp checker test
