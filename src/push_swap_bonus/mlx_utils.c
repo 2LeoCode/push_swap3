@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 11:18:57 by lsuardi           #+#    #+#             */
-/*   Updated: 2021/10/12 15:21:17 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/12 22:01:14 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static void	setup_range(t_range *range, double max, double min)
 {
 	range->max = max;
 	range->min = min;
-	range->rg = (double)TILE_X / (max - min);
+	if (!(max - min))
+		range->rg = TILE_X;
+	else
+		range->rg = (double)TILE_X / (max - min);
 }
 
 void	display_stacks(t_mlxptr mlx, const t_stack *a, const t_stack *b,
@@ -77,7 +80,8 @@ void	display_stacks(t_mlxptr mlx, const t_stack *a, const t_stack *b,
 	i = stksize(a);
 	while (--i >= 0)
 		render_rect(mlx, (t_rect){TILE_GAP, (i + 1) * (TILE_Y + TILE_GAP),
-			60 + range.rg * (a_raw[i] - range.min), TILE_Y});
+			60 + range.rg * (a_raw[i] - range.min + (range.rg == TILE_X)),
+			TILE_Y});
 	i = stksize(b);
 	while (--i >= 0)
 		render_rect(mlx, (t_rect){mlx->win.w / 2 + TILE_GAP,

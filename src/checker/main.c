@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:47:47 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/11 17:19:20 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/12 22:08:16 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ static const char	*(*g_instruction[INSTRUCTION_CNT])() = {
 	rrb,
 	rrr
 };
+
+int	invalid_instruction(t_stack **a_ptr, t_stack **b_ptr)
+{
+	write(1, "Error\n"
+		"invalid instruction\n", 26);
+	free(*a_ptr);
+	*a_ptr = NULL;
+	free(*b_ptr);
+	*b_ptr = NULL;
+	return (-1);
+}
 
 static int	checker_judge(t_stack **a_ptr, t_stack **b_ptr)
 {
@@ -54,7 +65,7 @@ static int	apply_instructions(t_stack **sa_ptr, t_stack **sb_ptr)
 			++i;
 		free(instruction);
 		if (i == INSTRUCTION_CNT)
-			return (checker_ko(sa_ptr, sb_ptr));
+			return (invalid_instruction(sa_ptr, sb_ptr));
 		g_instruction[i](*sa_ptr, *sb_ptr);
 		rd_ret = get_next_line(0, &instruction);
 	}
@@ -70,8 +81,6 @@ int	main(int argc, char **argv)
 	size_t		size;
 	void		(*errfun)(void);
 
-	if (argc < 2)
-		return (ft_exception(invalid_arguments));
 	size = get_stack_size(argc - 1, (const char **)argv + 1);
 	if (size == INVALID_INPUT)
 		return (ft_exception(invalid_arguments));

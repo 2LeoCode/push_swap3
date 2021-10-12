@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 17:16:36 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/12 16:19:56 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/12 21:45:45 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define COLOR_WHITE 0xffffffffU
 # define COLOR_BLACK 0x00000000U
 
-typedef struct s_mlx *	t_mlxptr;
+typedef struct s_mlx	*t_mlxptr;
 typedef struct s_mlx	t_mlxvar;
 
 typedef struct s_rect {

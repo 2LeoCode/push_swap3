@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 17:50:28 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/12 15:17:49 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/12 22:04:25 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	init_display_failure(t_mlxptr mlxvar)
 int	init_display(t_mlxptr mlxvar, char *title, t_stack *a, t_stack *b)
 {
 	const int	tot_size = stksize(a) + stksize(b);
-
 
 	mlxvar->win.w = 60 * 2 + TILE_X * 2 + 3 * TILE_GAP;
 	mlxvar->win.h = TILE_Y * (tot_size + 2) + TILE_GAP * (tot_size + 1);
@@ -38,8 +37,8 @@ int	init_display(t_mlxptr mlxvar, char *title, t_stack *a, t_stack *b)
 					mlxvar->win.img_key, &mlxvar->win.bpp,
 					&mlxvar->win.size_line, &mlxvar->win.endian);
 	}
-	if (!(mlxvar->win.title && mlxvar->key && mlxvar->win.key
-			&& mlxvar->win.img_key && mlxvar->win.pixels))
+	if (!(mlxvar->win.title && mlxvar->key
+			&& mlxvar->win.key && mlxvar->win.img_key && mlxvar->win.pixels))
 		return (init_display_failure(mlxvar));
 	render_head(mlxvar);
 	render_foot(mlxvar);

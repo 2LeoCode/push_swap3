@@ -6,13 +6,14 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 19:46:39 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/12 14:51:40 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/12 22:40:34 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <resolver_bonus.h>
-#include <stdio.h>
 #include <stddef.h>
+
+typedef	t_stack	*(*t_stack_array_addr)[2];
 
 void	get_instruction_queue(t_mlxptr mlx, t_stack *st[2], t_queue *instr)
 {
@@ -31,19 +32,20 @@ void	get_instruction_queue(t_mlxptr mlx, t_stack *st[2], t_queue *instr)
 		next_streak_init});
 }
 
-static int	ft_resolver_failure(void (*except), t_stack **st_a, t_stack **st_b,
-		t_queue **instr_q)
+static int	ft_resolver_failure(void (*except)(void), t_stack **st_a,
+		t_stack **st_b, t_queue **instr_q)
 {
 	free(*instr_q);
 	*instr_q = NULL;
 	return (ft_failure(except, st_a, st_b));
 }
 
-static int	ft_mlx_failure(void (*except), t_stack *(*st)[2], t_queue **instr_q,
-		t_mlxptr mlx_ptr)
+static int	ft_mlx_failure(void (*except)(void),
+		t_stack_array_addr st, t_queue **instr_q, t_mlxptr mlx_ptr)
 {
-	destroy_display(mlx_ptr->key);
-	return (ft_resolver_failure(except, st[ST_A], st[ST_B], instr_q));
+	destroy_display(mlx_ptr);
+	return (ft_resolver_failure(except, &((*st)[ST_A]), &((*st)[ST_B]),
+		instr_q));
 }
 
 static int	clear_left_memory(t_mlxptr mlx_ptr, t_queue *instr, t_stack *a,
