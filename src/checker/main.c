@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 22:47:47 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/12 22:08:16 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/13 10:53:14 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	main(int argc, char **argv)
 	size_t		size;
 	void		(*errfun)(void);
 
+	if (argc == 1)
+		return (0);
 	size = get_stack_size(argc - 1, (const char **)argv + 1);
 	if (size == INVALID_INPUT)
 		return (ft_exception(invalid_arguments));

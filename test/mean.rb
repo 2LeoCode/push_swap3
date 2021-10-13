@@ -14,7 +14,8 @@ max = -1;
 for i in 1..ARGV[0].to_i
 	print "running test #{i}/#{ARGV[0].to_i} ... #{working[i % working.length]}\r"
 	$stdout.flush
-	moves = `ARG=$(./random.rb -9999 9999 #{ARGV[1].to_i}) && ./push_swap $ARG | wc -l`.to_i
+	random_values = (-9999..9999).to_a.sample(ARGV[1].to_i).join(' ')
+	moves = `./push_swap #{random_values} | wc -l`.to_i
 	if (moves > max)
 		max = moves
 	end
