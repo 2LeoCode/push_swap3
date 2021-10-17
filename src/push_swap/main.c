@@ -6,7 +6,7 @@
 /*   By: Leo Suardi <lsuardi@student.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 19:46:39 by Leo Suardi        #+#    #+#             */
-/*   Updated: 2021/10/13 10:51:06 by Leo Suardi       ###   ########.fr       */
+/*   Updated: 2021/10/17 18:24:47 by Leo Suardi       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	clear_left_memory(t_queue *instr, t_stack *a,
 	free(b);
 	return (0);
 }
-#include <stdio.h>
+
 int	main(int argc, char **argv)
 {
 	t_stack		*st[2];

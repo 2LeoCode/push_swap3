@@ -2,6 +2,7 @@ SHELL=bash
 OS=$(shell uname)
 
 NAME=checker push_swap
+
 .SUFFIXES=.c .o .h
 
 INCD=inc
@@ -26,6 +27,13 @@ OBJ=$(COMMON_OBJ) $(CHECKER_OBJ) $(RESOLVER_OBJ)
 
 CC=clang
 CFLAGS=-Wall -Werror -Wextra -I $(INCD) #-fsanitize=address
+MFLAGS=--no-print-directory
+
+export SHELL
+export OS
+export .SUFFIXES
+export CC
+export MFLAGS
 
 all: $(NAME)
 
@@ -34,34 +42,35 @@ fall: $(addprefix f, $(NAME))
 $(OBJD)/common/%$(word 2, $(.SUFFIXES)): $(SRCD)/common/%$(word 1, $(.SUFFIXES)) $(INC) $(wildcard $(INCD)/*.h)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-push_swap: $(COMMON_OBJ)
-	$(MAKE) -C $(SRCD)/$@
+push_swap: $(OBJD) $(COMMON_OBJ)
+	$(MAKE) $(MFLAGS) -C $(SRCD)/$@
 	cp $(SRCD)/$@/$@ .
 
 fpush_swap: $(OBJD) $(COMMON_OBJ)
-	$(MAKE) -C $(SRCD)/push_swap
+	$(MAKE) $(MFLAGS) -C $(SRCD)/push_swap
 	cp $(SRCD)/push_swap/push_swap .
 
 checker: $(OBJD) $(COMMON_OBJ)
-	$(MAKE) -C $(SRCD)/checker
+	$(MAKE) $(MFLAGS) -C $(SRCD)/checker
 	cp $(SRCD)/checker/checker .
 
 fchecker: $(OBJD) $(COMMON_OBJ)
-	$(MAKE) -C $(SRCD)/checker
+	$(MAKE) $(MFLAGS) -C $(SRCD)/checker
 	cp $(SRCD)/checker/checker .
 
 bonus: $(OBJD) $(COMMON_OBJ)
-	$(MAKE) -C $(SRCD)/push_swap_bonus
+	$(MAKE) $(MFLAGS) -C $(SRCD)/push_swap_bonus
 	cp $(SRCD)/push_swap_bonus/push_swap .
 
-clean:
-	@rm -f $(OBJ)
-	@echo Cleaning...
+clean_common:
+	rm -f $(COMMON_OBJ)
 
-fclean: clean
-	@rm -f $(NAME)
-	@$(foreach dir, $(NAME), $(MAKE) fclean -C $(SRCD)/$(dir);)
-	@$(MAKE) fclean -C $(SRCD)/push_swap_bonus
+clean: clean_common
+	$(foreach dir, $(NAME) push_swap_bonus, $(MAKE) fclean $(MFLAGS) -C $(SRCD)/$(dir);)
+
+fclean: clean_common
+	rm -f $(NAME)
+	$(foreach dir, $(NAME) push_swap_bonus, $(MAKE) fclean $(MFLAGS) -C $(SRCD)/$(dir);)
 
 re: fclean all
 
@@ -72,4 +81,4 @@ test: all
 	cp checker test
 	cp push_swap test
 
-.PHONY: all fall fchecker fpush_swap clean fclean re init bonus test
+.PHONY: all fall fchecker fpush_swap clean fclean re bonus test
